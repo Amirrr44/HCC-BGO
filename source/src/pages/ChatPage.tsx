@@ -1,6 +1,6 @@
 /**
  * Chat page. The room name in the header is a button that opens the
- * Members page. The dedicated Members icon has been removed.
+ * Members page.
  */
 
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -18,13 +18,16 @@ import {
 } from '@mui/material';
 import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import MoveToInboxRoundedIcon from '@mui/icons-material/MoveToInboxRounded';
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import { useNavigate } from 'react-router-dom';
+import { App } from '@capacitor/app';
 import { useSession } from '../store/session';
 import { MessageBubble } from '../components/chat/MessageBubble';
 import { MessageInput } from '../components/chat/MessageInput';
 import type { ChannelStatus } from '../services/crypto/secureChannel';
 import { useBackButton } from '../hooks/useBackButton';
+import { BackgroundService } from '../services/network/backgroundService';
 
 const STATUS_COLOR: Record<ChannelStatus, string> = {
   idle: 'text.secondary',
@@ -60,6 +63,26 @@ export function ChatPage() {
   const [backToastMessage, setBackToastMessage] = useState<string | null>(null);
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  // Background and Notification handlers
+  useEffect(() => {
+    BackgroundService.initListeners();
+
+    const listener = App.addListener('appStateChange', (state) => {
+      if (state.isActive) {
+        void BackgroundService.clearNotification();
+      }
+    });
+
+    return () => {
+      void listener.then((l) => l.remove());
+    };
+  }, []);
+
+  const handleGoToBackground = async () => {
+    await BackgroundService.showBackgroundNotification();
+    await App.minimizeApp();
+  };
 
   // Back button handler for ChatPage
   const handleBack = useCallback(
@@ -133,9 +156,15 @@ export function ChatPage() {
             </IconButton>
           </Tooltip>
 
+          <Tooltip title="Run in Background">
+            <IconButton onClick={handleGoToBackground} sx={{ ml: 0.5 }}>
+              <MoveToInboxRoundedIcon />
+            </IconButton>
+          </Tooltip>
+
           <Tooltip title="Disconnect">
             <IconButton
-              sx={{ ml: 1 }}
+              sx={{ ml: 0.5 }}
               onClick={() => {
                 disconnect();
                 navigate('/');
