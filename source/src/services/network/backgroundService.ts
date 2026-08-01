@@ -12,12 +12,12 @@ export class BackgroundService {
           actions: [
             {
               id: 'reopen_app',
-              title: 'باز کردن چت',
+              title: 'Open Chat',
               foreground: true
             },
             {
               id: 'close_app',
-              title: 'بستن کامل برنامه',
+              title: 'Exit App',
               destructive: true,
               foreground: false
             }
@@ -34,8 +34,8 @@ export class BackgroundService {
       notifications: [
         {
           id: BACKGROUND_NOTIF_ID,
-          title: 'چت‌روم فعال است',
-          body: 'برنامه در پس‌زمینه فعال است و پیام‌ها را دریافت می‌کند.',
+          title: 'Chat is active in background',
+          body: 'Receiving new messages...',
           actionTypeId: 'CHAT_BACKGROUND_ACTIONS',
           ongoing: true,
           autoCancel: false,
