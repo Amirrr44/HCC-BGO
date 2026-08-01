@@ -1,0 +1,18 @@
+{
+  "appId": "app.securehackchat.client",
+  "appName": "Secure Hack.Chat",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "allowMixedContent": true,
+    "captureInput": true
+  },
+  "plugins": {
+    "Camera": {
+      "permissions": ["camera"]
+    }
+  }
+}

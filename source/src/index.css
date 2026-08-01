@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #101014;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Inter', 'SF Pro Text', 'Segoe UI', system-ui, -apple-system,
+    'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ----------------------------------------------------------------
+ * Native-app feel: disable pinch-zoom / double-tap zoom
+ * ---------------------------------------------------------------- */
+html, body {
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overscroll-behavior: contain;
+}
+
+/* ----------------------------------------------------------------
+ * Disable text selection app-wide.
+ * ---------------------------------------------------------------- */
+html, body, #root {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Opt-in: allow text selection only on these elements. */
+.allow-text-select,
+.allow-text-select * {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* ----------------------------------------------------------------
+ * Layout Base
+ * ---------------------------------------------------------------- */
+#root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+/* ----------------------------------------------------------------
+ * Custom scrollbars
+ * ---------------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
